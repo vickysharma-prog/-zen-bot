@@ -20,6 +20,7 @@
 ## 🎯 Overview
 
 **Zen-Bot** is an intelligent voice assistant that combines speech recognition, natural language processing, and AI to create a seamless hands-free experience. Built with modularity and extensibility in mind.
+<div align="center">
 ┌──────────────────────────────────────────────────────────┐
 │ ░▒▓█ ZEN-BOT █▓▒░ │
 │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │
@@ -31,11 +32,8 @@
 │ │
 │ [ AWAITING INPUT... ] │
 └──────────────────────────────────────────────────────────┘
-
-text
-
-
 ---
+</div>
 
 ## ✨ Features
 
@@ -99,6 +97,8 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+```
 Configuration
 Create a .env file in the root directory:
 
