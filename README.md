@@ -100,7 +100,7 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-```
+
 Configuration
 Create a .env file in the root directory:
 
