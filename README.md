@@ -187,6 +187,7 @@ pytest tests/ -v
 
 # Run with coverage
 pytest tests/ --cov=src
+```
 🤝 Contributing
 Contributions are welcome! Please follow these steps:
 
@@ -206,4 +207,4 @@ Vicky - GitHub
 
 Made with ❤️ and Python
 
-</div> ```
+</div> 
