@@ -23,18 +23,19 @@
 
 **Zen-Bot** is an intelligent voice assistant that combines speech recognition, natural language processing, and AI to create a seamless hands-free experience. Built with modularity and extensibility in mind.
 <div align="center">
+```
 ┌──────────────────────────────────────────────────────────┐
-│ ░▒▓█ ZEN-BOT █▓▒░ │
-│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │
-│ │
-│ > INITIALIZING SYSTEM... │
-│ > LOADING VOICE MODULE... OK │
-│ > CONNECTING AI CORE... OK │
-│ > ALL SYSTEMS OPERATIONAL │
-│ │
-│ [ AWAITING INPUT... ] │
+│  ░▒▓█ ZEN-BOT █▓▒░                                       │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                      │
+│                                                          │
+│  > INITIALIZING SYSTEM...                                │
+│  > LOADING VOICE MODULE... OK                            │
+│  > CONNECTING AI CORE... OK                              │
+│  > ALL SYSTEMS OPERATIONAL                               │
+│                                                          │
+│  [ AWAITING INPUT... ]                                   │
 └──────────────────────────────────────────────────────────┘
----
+```
 </div>
 
 ## ✨ Features
