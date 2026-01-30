@@ -1,0 +1,10 @@
+voice:
+  enabled: true
+  wake_word: "zen"
+  language: "en"
+  speech_rate: 175
+
+ai:
+  provider: "gemini"
+  temperature: 0.7
+  max_tokens: 1024
