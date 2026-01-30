@@ -5,6 +5,7 @@ from rich.console import Console
 from src.core.logger import get_logger
 from src.voice.speech_to_text import SpeechToText
 from src.voice.text_to_speech import TextToSpeech
+from src.ai.ai_manager import AIManager
 
 
 class ZenBot:
@@ -15,6 +16,7 @@ class ZenBot:
         self.logger = get_logger()
         self.stt = SpeechToText()
         self.tts = TextToSpeech()
+        self.ai = AIManager()  # NEW!
         self.running = False
     
     def start(self):
@@ -22,29 +24,42 @@ class ZenBot:
         self._show_welcome()
         self.running = True
         
-        self.tts.speak("Hello! I am Zen, your assistant. How can I help?")
+        self.tts.speak("Hello! I am Zen, your AI assistant. How can I help?")
         
         while self.running:
             try:
-                self.console.print("\n[dim]🎤 Listening...[/dim]")
+                self.console.print("\n[green]🎤 Listening...[/green]")
                 text = self.stt.listen(timeout=5.0)
                 
                 if text:
-                    response = self.process_command(text)
-                    self.tts.speak(response)
-                    
                     if is_exit_command(text):
                         self.running = False
+                        continue
+                    
+                    response = self._get_response(text)
+                    self.tts.speak(response)
                         
             except KeyboardInterrupt:
                 self.running = False
         
         self.tts.speak("Goodbye!")
-        self.console.print("\n[bold cyan]Bye! 👋[/bold cyan]")
+        self.console.print("\n[bold green]Bye! 👋[/bold green]")
     
-    def process_command(self, command):
-        """Process a command."""
-        return process_command(command)
+    def _get_response(self, command):
+        """Get response using AI."""
+        cmd = command.lower()
+        
+        # Quick commands (no AI needed)
+        if "time" in cmd:
+            now = datetime.now()
+            return f"The time is {format_time(now.hour, now.minute)}"
+        
+        if "date" in cmd:
+            now = datetime.now()
+            return f"Today is {now.strftime('%A, %B %d, %Y')}"
+        
+        # Use AI for everything else
+        return self.ai.get_response(command)
     
     def _show_welcome(self):
         """Show welcome screen."""

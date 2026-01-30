@@ -71,3 +71,14 @@ class TestFormatTime:
     def test_invalid_minute(self):
         with pytest.raises(ValueError):
             format_time(10, 60)
+
+class TestAI:
+    """Test AI integration."""
+    
+    def test_ai_response(self):
+        """Test that AI gives non-empty response."""
+        from src.ai.ai_manager import AIManager
+        ai = AIManager()
+        response = ai.get_response("Hello")
+        assert len(response) > 0
+        assert isinstance(response, str)
