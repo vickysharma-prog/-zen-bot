@@ -16,7 +16,7 @@ class ZenBot:
         self.logger = get_logger()
         self.stt = SpeechToText()
         self.tts = TextToSpeech()
-        self.ai = AIManager()  # NEW!
+        self.ai = AIManager()
         self.running = False
     
     def start(self):
@@ -24,7 +24,19 @@ class ZenBot:
         self._show_welcome()
         self.running = True
         
-        self.tts.speak("Hello! I am Zen, your AI assistant. How can I help?")
+        # Time-based greeting with Sir
+        now = datetime.now()
+        hour = now.hour
+        time_str = format_time(now.hour, now.minute)
+
+        if hour < 12:
+            greeting = "Good morning"
+        elif hour < 17:
+            greeting = "Good afternoon"
+        else:
+            greeting = "Good evening"
+
+        self.tts.speak(f"{greeting} Sir! The time is {time_str}. How may I assist you today?")
         
         while self.running:
             try:
@@ -42,14 +54,13 @@ class ZenBot:
             except KeyboardInterrupt:
                 self.running = False
         
-        self.tts.speak("Goodbye!")
+        self.tts.speak("Goodbye Sir!")
         self.console.print("\n[bold green]Bye! 👋[/bold green]")
     
     def _get_response(self, command):
         """Get response using AI."""
         cmd = command.lower()
         
-        # Quick commands (no AI needed)
         if "time" in cmd:
             now = datetime.now()
             return f"The time is {format_time(now.hour, now.minute)}"
@@ -58,7 +69,6 @@ class ZenBot:
             now = datetime.now()
             return f"Today is {now.strftime('%A, %B %d, %Y')}"
         
-        # Use AI for everything else
         return self.ai.get_response(command)
     
     def _show_welcome(self):
