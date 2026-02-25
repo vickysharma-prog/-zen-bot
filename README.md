@@ -200,7 +200,7 @@ Open a Pull Request
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 👨‍💻 Author
-Vicky - GitHub
+Vicky sharma - GitHub
 
 <div align="center">
 ⭐ Star this repository if you found it helpful!
