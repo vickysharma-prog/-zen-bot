@@ -1,22 +1,32 @@
 """Zen-Bot: AI-Powered Voice Assistant."""
 
 from datetime import datetime
-from rich.console import Console
-from src.core.logger import get_logger
-from src.voice.speech_to_text import SpeechToText
-from src.voice.text_to_speech import TextToSpeech
-from src.ai.ai_manager import AIManager
 
 
 class ZenBot:
-    """Main assistant controller."""
-    
+    """Main assistant controller.
+
+    The voice, AI and Rich imports are deferred to construction time so the
+    pure command-processing functions in this module can be imported (and
+    unit-tested) without the audio/AI stack installed.
+    """
+
     def __init__(self):
+        from rich.console import Console
+        from src.core.logger import get_logger
+        from src.core.router import CommandRouter
+        from src.modules.productivity.tasks import TaskStore
+        from src.voice.speech_to_text import SpeechToText
+        from src.voice.text_to_speech import TextToSpeech
+        from src.ai.ai_manager import AIManager
+
         self.console = Console()
         self.logger = get_logger()
         self.stt = SpeechToText()
         self.tts = TextToSpeech()
         self.ai = AIManager()
+        self.tasks = TaskStore()
+        self.router = CommandRouter(self.tasks)
         self.running = False
     
     def start(self):
@@ -58,17 +68,14 @@ class ZenBot:
         self.console.print("\n[bold green]Bye! 👋[/bold green]")
     
     def _get_response(self, command):
-        """Get response using AI."""
-        cmd = command.lower()
-        
-        if "time" in cmd:
-            now = datetime.now()
-            return f"The time is {format_time(now.hour, now.minute)}"
-        
-        if "date" in cmd:
-            now = datetime.now()
-            return f"Today is {now.strftime('%A, %B %d, %Y')}"
-        
+        """Route to a built-in skill first, then fall back to the AI."""
+        try:
+            handled = self.router.route(command)
+            if handled is not None:
+                return handled
+        except Exception as e:  # a skill must never take the whole loop down
+            self.logger.error(f"Router error: {e}")
+
         return self.ai.get_response(command)
     
     def _show_welcome(self):

@@ -73,12 +73,18 @@ class TestFormatTime:
             format_time(10, 60)
 
 class TestAI:
-    """Test AI integration."""
-    
+    """Test AI integration (skipped unless the AI stack + key are available)."""
+
     def test_ai_response(self):
-        """Test that AI gives non-empty response."""
+        """AI gives a non-empty response when configured."""
+        import os
+
+        pytest.importorskip("google.generativeai")
+        if not os.getenv("GEMINI_API_KEY"):
+            pytest.skip("GEMINI_API_KEY not set; skipping live AI test")
+
         from src.ai.ai_manager import AIManager
-        ai = AIManager()
+
+        ai = AIManager(db_path=":memory:")
         response = ai.get_response("Hello")
-        assert len(response) > 0
-        assert isinstance(response, str)
+        assert isinstance(response, str) and len(response) > 0
